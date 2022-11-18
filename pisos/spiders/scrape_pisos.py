@@ -70,7 +70,10 @@ class ScrapePisosSpider(scrapy.Spider):
 
         # Clean keys
         for key in detail:
-            if detail[key] is not None and isinstance(detail[key], str) :
-                detail[key] = detail[key].encode('utf-8').decode('utf-8').strip()
+            if detail[key] is not None and isinstance(detail[key], str):
+                if key != 'url' and key != 'imgPreview':
+                    detail[key] = detail[key].encode('utf-8').decode('utf-8').replace(':', '').strip()
+                else:
+                    detail[key] = detail[key].encode('utf-8').decode('utf-8').strip()
 
         yield detail
