@@ -3,23 +3,19 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 
-
-# useful for handling different item types with a single interface
-from itemadapter import ItemAdapter
-
 # To index data in Elasticsearch
 from elasticsearch import Elasticsearch
 from elasticsearch.exceptions import NotFoundError
 from elasticsearch_dsl import Index, analyzer, tokenizer
 
 
-class PisosPipeline:
+class PisosPipeline(object):
+    
+    collection_name = 'pisoscom'
+    
     def __init__(self):
         self.elastic_uri = 'http://localhost:9200/'
         self.elastic_db = 'pisoscom'
-
-    def process_item(self, item, spider):
-        return item
 
     def open_spider(self, spider):
         self.client = Elasticsearch()
